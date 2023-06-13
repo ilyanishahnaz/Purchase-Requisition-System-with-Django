@@ -1,0 +1,130 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<style>
+.card {
+background-color:white;
+padding: 18px;
+margin-left: 20px;
+margin-top: 20px;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-shadow: 2px 2px 6px #ccc;
+text-align: bottom;
+font-size: 14px;
+display: inline-block;
+}
+
+table, th,td {
+    margin :0 auto;
+    margin-top : 30px;
+    width: 70%;
+    padding : 15px;
+} 
+
+table{
+    margin-bottom : 10px;
+}
+
+th {
+    background-color: #70A1FE;
+    color: white;
+    text-align: center;
+
+}
+tr{
+    border:1px solid;
+    border-color: #70A1FE;
+    text-align: center;
+}
+
+.pr-container {
+    border: 1px solid #ccc;
+    border-color: gray;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px #ccc;
+    text-align: center;
+    margin: 0 auto;
+    width: 80%;
+}
+
+
+
+</style>
+
+<h2 style = "text-align: center;">Purchase Requisition Form {{formID}}</h2>
+
+</br>
+{% for PR in pr %}
+<div class = "pr-container">
+    <div class="row">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <i class="fa fa-clipboard fa-lg" style="color: grey; padding-right: 10px;"></i>
+            Form ID <span class="card">{{PR.formID}}</span>
+        </div>
+        <div class="col-md-8 d-flex align-items-center justify-content-center">
+            <i class="fa fa-calendar fa-lg" style="color: grey; padding-right: 10px;" ></i>
+            Date <span class="card">{{PR.formDate}}</span>
+        </div>
+    </div>
+    <div class ="row">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <i class="fa fa-user fa-lg" style="color: grey; padding-right: 10px;"></i>
+            Requested by <span class="card">{{PR.empID}}</span>
+        </div>
+        <div class="col-md-4 d-flex align-items-center">
+            <i class="fa fa-industry fa-lg" style="color: grey; padding-right: 10px;"></i>
+            Status <span class="card">{{PR.formStatus}}</span>
+        </div>
+    </div>
+    <div class ="row">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <i class="fa fa-calendar fa-lg" style="color: grey; padding-right: 10px;"></i>
+            Delivery Date<span class="card">{{PR.requiredBy}}</span>
+        </div>
+        <div class="col-md-8 d-flex align-items-center justify-content-center">
+            <i class="fa fa-calendar fa-lg" style="color: grey; padding-right: 10px;"></i>
+            Manager ID<span class="card">{{PR.managerID}}</span>
+        </div>
+    </div>
+    <div class ="row">
+        <div class="col-md-8  d-flex align-items-center justify-content-center">
+            <i class="fa fa-map-marker fa-lg" style="color: grey; padding-right: 10px;"></i>
+            Delivery Address <span class="card">{{PR.delAddress}}</span>
+        </div>
+    </div>
+    {% endfor %}
+    <div class ="row">
+        <div class = "col-md-12 ">
+        <table class="text-center">
+
+            <thead>
+                <th>Item ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total (RM)</th>
+            </thead>
+            {%for items in pr_items%}
+            <tr>
+                <td>{{items.itemID}}</td>
+                <td>{{items.itemName}}</td>
+                <td>{{items.quantity}}</td>
+                <td>{{items.unitPrice}}</td>
+                <td>{{items.totalPrice}}</td>
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+        <div class = "row">
+            <div class="col-md-12 d-flex align-items-center justify-content-center">
+                <i class="fa fa-dollar-sign" style="color: grey; padding-right: 10px;"></i>
+                Total Price (RM) <span class="card">{{total_price_sum}}</span>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

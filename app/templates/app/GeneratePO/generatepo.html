@@ -1,0 +1,99 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+<style>
+ table, th,td {
+    padding:15px;
+} 
+
+th {
+    background-color: #70A1FE;
+    color: white;
+
+}
+tr{
+    border:1px solid;
+    border-color: #70A1FE;
+}
+tr > td {
+    min-width: 200px;
+    /* border: 1px solid black; */
+}
+tr > td:first-child {
+    min-width: 400px;
+}
+
+.search{
+    float:right;
+}
+
+.input[type=text]{
+    float: right;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    border: 1px solid;
+    font-size:17px;
+
+ }
+ search button{
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+ }
+
+ .search button:hover{
+    background: #ccc;
+ }
+</style>
+<div>
+    <h3>Select Generate Purchase Order</h3>
+    <br/>
+    <form class="margintop" action = 'menu' method='POST' style='display:inline'>
+        {% csrf_token %} 
+        <button class="btn btn-outline-secondary">Back</button>
+        </form>
+    <br/>
+    <br/>
+    <br/>
+
+
+<table>
+
+<thead>
+    <th>Form ID</th>
+    <th>Quotation ID</th>
+    <th>Date</th>
+    <th>View Quotation</th>
+    <th>Generate Purchase Order</th>
+</thead>
+{% for quo in Quo_list %}
+    {% if quo.StatusQuo == 'Approved'%}
+<tr>
+        <td>{{quo.formID}}</td>
+        <td>{{quo.quoID}}</td>
+        <td>{{quo.quoDate}}</td>
+        <td><form class="margintop" action='viewAppQuo' method='POST'>
+            {% csrf_token %}
+            <input type="hidden" name="quoID" value="{{quo.quoID}}">
+            <button type="submit" class="btn btn-success">View</button><br />
+        </form></td>
+        <td><form class="margintop" action='generatepoform' method='POST'>
+            {% csrf_token %}
+            <input type="hidden" name="quoID" value="{{quo.quoID}}">
+            <button type="submit" class="btn btn-success">Generate</button><br />
+        </form></td>
+        {% endif %}
+</tr>
+{% endfor %}
+
+</div>
+</table>
+{% endblock %}

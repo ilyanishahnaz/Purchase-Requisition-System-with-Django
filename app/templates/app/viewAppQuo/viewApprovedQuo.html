@@ -1,0 +1,87 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+<style>
+ table, th,td {
+    padding:15px;
+} 
+
+th {
+    background-color: #70A1FE;
+    color: white;
+
+}
+tr{
+    border:1px solid;
+    border-color: #70A1FE;
+}
+tr > td {
+    min-width: 200px;
+    /* border: 1px solid black; */
+}
+tr > td:first-child {
+    min-width: 400px;
+}
+
+.search{
+    float:right;
+}
+
+.input[type=text]{
+    float: right;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    border: 1px solid;
+    font-size:17px;
+
+ }
+ search button{
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+ }
+
+ .search button:hover{
+    background: #ccc;
+ }
+</style>
+<div>
+    <h3>Approved Quotation for Form {{formID}}</h3>
+    <br/>
+
+
+<table>
+{% for quo in quotation %}
+    {% if quo.StatusQuo == 'Approved' %}
+    <thead>
+        <th>Quotation ID</th>
+        <th>Vendor ID</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>View Quotation</th>
+    </thead>
+    <tr>
+        <td>{{quo.quoID}}</td>
+        <td>{{quo.vendID}}</td>
+        <td>{{quo.quoDate}}</td>
+        <td>{{quo.StatusQuo}}</td>
+        <td><form class="margintop" action='viewAppQuo' method='POST'>
+            {% csrf_token %}
+            <input type="hidden" name="quoID" value="{{quo.quoID}}">
+            <button type="submit" class="btn btn-success">View</button><br />
+        </form></td>
+    </tr>
+    {% endif %}
+{% endfor %}
+
+</div>
+</table>
+{% endblock %}

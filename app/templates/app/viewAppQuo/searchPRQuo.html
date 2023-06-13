@@ -1,0 +1,110 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+<style>
+ table, th,td {
+    padding:15px;
+} 
+
+th {
+    background-color: #70A1FE;
+    color: white;
+
+}
+tr{
+    border:1px solid;
+    border-color: #70A1FE;
+}
+tr > td {
+    min-width: 200px;
+    /* border: 1px solid black; */
+}
+tr > td:first-child {
+    min-width: 400px;
+}
+
+.search{
+    float:right;
+}
+
+.input[type=text]{
+    float: right;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    border: 1px solid;
+    font-size:17px;
+
+ }
+ search button{
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+ }
+
+ .search button:hover{
+    background: #ccc;
+ }
+</style>
+<div>
+    <h3>View Selected Quotation</h3>
+    <br/>
+  <form class="margintop" action = 'searchPRQuo' method='POST'>
+    {% csrf_token %} 
+    <input type="text" placeholder="Search here..." aria-label="Search here.." name = "searched")>
+    <button class="btn btn-outline-secondary">Search</button>
+    </form>
+
+<table>
+{% if searched %}
+    {% if formID %}
+    {%for id in formID%}
+        {% if id.formStatus == 'Approved'%}
+        <em>You searched for {{searched}}</em>
+        <br/>
+        <thead>
+            <th>Employee ID</th>
+            <th>Form ID</th>
+            <th>Date</th>
+            <th>View Form</th>
+            <th>View Quotations</th>
+        </thead>
+                <tr>
+                    <td>{{id.empID}}</td>
+                    <td>{{id.formID}}</td>
+                    <td>{{id.formDate}}</td>
+                    <td><form class="margintop" action='viewSelectedPR' method='POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="formID" value="{{id.formID}}">
+                        <button type="submit" class="btn btn-success">View</button><br/>
+                    </form></td>
+                    <td><form class="margintop" action='viewApprovedQuo' method='POST'>
+                        {% csrf_token %}
+                        <input type="hidden" name="formID" value="{{id.formID}}">
+                        <button type="submit" class="btn btn-success">View</button><br />
+                    </form></td>
+                </tr>
+                {%else%}
+                    <p style="color:red"><em>ID "{{searched}}" not found, Please try again</em></p>
+                {% endif %}
+
+            {% endfor %}
+        {% else %}
+            <p style="color:red"><em>ID "{{searched}}" not found, Please try again</em></p>
+        {% endif %}
+{% else %}
+    <p style="color:red"><em>Please enter an ID to search</em></p>
+    <br/>
+{% endif %}
+
+
+</div>
+</table>
+{% endblock %}

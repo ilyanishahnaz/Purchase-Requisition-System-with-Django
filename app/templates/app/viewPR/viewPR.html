@@ -1,0 +1,95 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+<style>
+ table, th,td {
+    padding:15px;
+} 
+
+th {
+    background-color: #70A1FE;
+    color: white;
+
+}
+tr{
+    border:1px solid;
+    border-color: #70A1FE;
+}
+tr > td {
+    min-width: 200px;
+    /* border: 1px solid black; */
+}
+tr > td:first-child {
+    min-width: 400px;
+}
+
+.search{
+    float:right;
+}
+
+.input[type=text]{
+    float: right;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    border: 1px solid;
+    font-size:17px;
+
+ }
+ search button{
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+ }
+
+ .search button:hover{
+    background: #ccc;
+ }
+</style>
+<div>
+    <h3>View Approved Purchase Requisition</h3>
+    <br/>
+  <form class="margintop" action = 'searchSelectedPR' method='POST'>
+    {% csrf_token %} 
+    <input type="text" placeholder="Search here..." aria-label="Search here.." name = "searched")>
+    <button class="btn btn-outline-secondary">Search</button>
+    </form>
+    <br/>
+
+
+<table>
+
+<thead>
+    <th>Employee ID</th>
+    <th>Form ID</th>
+    <th>Date</th>
+    <th>Status</th>
+    <th>View Form</th>
+</thead>
+{% for pr in PR_list %}
+    {% if pr.formStatus == 'Approved'%}
+    <tr>
+        <td>{{pr.empID}}</td>
+        <td>{{pr.formID}}</td>
+        <td>{{pr.formDate}}</td>
+        <td>{{pr.formStatus}}</td>
+        <td><form class="margintop" action='viewSelectedPR' method='POST'>
+            {% csrf_token %}
+            <input type="hidden" name="formID" value="{{pr.formID}}">
+            <button type="submit" class="btn btn-success">View</button><br />
+        </form></td>
+    </tr>
+    {% endif %}
+{% endfor %}
+
+
+</div>
+</table>
+{% endblock %}

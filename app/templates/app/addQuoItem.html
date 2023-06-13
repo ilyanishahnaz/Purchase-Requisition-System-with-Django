@@ -1,0 +1,43 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<style>
+    table, th,td {
+    margin :0 auto;
+    margin-top : 30px;
+    width: 70%;
+    padding : 15px;
+} 
+
+table{
+    margin-bottom : 10px;
+}
+
+th {
+    background-color: #70A1FE;
+    color: white;
+    text-align: center;
+
+}
+tr{
+    border:1px solid;
+    border-color: #70A1FE;
+    text-align: center;
+}
+
+</style>
+
+<h2>Add Quotation Item</h2>
+</br></br>
+<form action="addQuoItem" method="POST">
+    {% csrf_token %}
+    {{ itemForm.as_p }}
+    <input type="submit" value="Add Item" class ="btn btn-secondary">
+</form>
+<form action="confirm" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Confirm" class ="btn btn-secondary">
+</form>
+<div>
+</div>
+{% endblock %}

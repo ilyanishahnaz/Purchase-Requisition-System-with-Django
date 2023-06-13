@@ -1,0 +1,166 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+<style>
+    .button{
+        padding : 15px 32px;
+        margin : 4px 2px;
+        display: inline-block;
+        width: 250px;
+        border: none;
+        border-radius: 12px;
+        background-color:#70A1FE ;
+        color: white;
+    }
+
+
+    .cardTitle {
+    background-color:#70A1FE;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px #ccc;
+    font: "Roboto";
+    color : white;
+    }
+
+    .card {
+        background-color:white;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 2px 2px 6px #ccc;
+
+    }
+
+</style>
+<div class = "container">
+    <br />
+    {% if is_employee %}
+    <table>
+        <h2>Employee Menu</h2>
+        <tr>
+            <form class="margintop" action='createPR' method='GET'>
+                <td><button type="submit" class="button">Create Purchase Requisition</button><br />
+            </form></td>
+            <form class="margintop" action='viewPRbyemp' method='GET'>
+                <td><button type="submit" class="button">View Purchase Requisition</button><br />
+            </form></td>
+        </tr>
+    </table>
+    {% elif is_manager %}
+    <h3>Welcome back, Manager {{ manager_name }}!</h3></br>
+    <div class="row">
+        <div class="col-md-12 mt-2">
+            <div class="card">
+                <div class="cardTitle d-flex align-items-center">
+                    Received Purchase Requisitions & Quotations
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a class="text-decoration-none text-dark">
+                                <div class="card my-card shadow">
+                                    <div class="card-body text-center">
+                                        <h4>Purchase Requisition <i class="fas fa-file-contract"></i></h4>
+                                        <h3>{{ PR_count }}</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="text-decoration-none text-dark">
+                                <div class="card my-card shadow">
+                                    <div class="card-body text-center">
+                                        <h4>Quotations <i class="fas fa-list-alt"></i></h4>
+                                        <h3>{{ Quo_count }}</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </br>
+    <h3>What would you like to do today?</h3>
+    <div class = "row">
+        <div class ="col-md-6 ">
+        <form class="margintop" action='approvePR' method='GET'>
+            <button type="submit" class="button">Approve Purchase Requisition</button>
+        </form>
+        </div>
+        <div class ="col-md-6">
+            <form class="margintop" action='viewPR' method='GET'>
+                <button type="submit" class="button">View Approved Purchase Requisition</button>
+            </form>
+        </div>
+    </div>
+
+    <div class = "row">
+        <div class ="col-md-6 ">
+            <form class="margintop" action='approveQuo' method='GET'>
+                <button type="submit" class="button">Select Quotation</button>
+            </form>
+        </div>
+        <div class ="col-md-6">
+            <form class="margintop" action='viewQuo' method='GET'>
+                <button type="submit" class="button">View Quotation</button><br />
+            </form>
+        </div>
+    </div>
+    <br />
+
+    {% elif is_pr %}
+    <h2>Purchaser Menu</h2>
+    <table>
+        <tr><td>
+            <form class="margintop" action='viewQuo' method='GET'>
+                <button type="submit" class="btn btn-info">View Quotation</button><br />
+            </form>
+                    </td></tr>
+                    
+                <tr><td>
+            <form class="margintop" action='createQuo' method='GET'>
+                <button type="submit" class="btn btn-outline-info waves-effect">Enter Quotation</button><br />
+            </form>
+    </table>
+
+    {% elif is_fo%}
+    <h3>Welcome back, Finance Officer {{ fo_name }}!</h3></br>
+    </br>
+    <h3>What would you like to do today?</h3>
+    <div>
+        <div>
+        <form class="margintop" action='generatepo' method='GET'>
+            <button type="submit" class="button">Generate Purchase Order</button>
+        </form>
+        </div>
+    <div>
+        <div>
+            <form class="margintop" action='viewpo' method='GET'>
+                <button type="submit" class="button">View Purchase Order</button>
+            </form>
+        </div>
+        <div>
+            <form class="margintop" action='viewQuo' method='GET'>
+                <button type="submit" class="button">View Quotation</button><br />
+            </form>
+        </div>
+    </div>
+    <br/>
+    
+                
+    {% else %}            
+        <tr><td>
+            <p>Undefined User.</p>
+        </td></tr>
+            
+    {% endif %}            
+</div>
+
+{% endblock %}
+ 
+ 

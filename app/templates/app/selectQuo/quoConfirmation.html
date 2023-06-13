@@ -1,0 +1,17 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class = "text-center">
+</br>
+    <h2 style = "text-align: center;">Quotation {{quoID}}</h2></br>
+    <h3 style = "text-align: center;">Thank you!</h3></br>
+    <i class="fa fa-check" style = "font-size: 36px;"></i>
+    <h3 style = "text-align: center;">The Quotation Status has been updated successfully</h3></br>
+
+<form class="margintop" action='approveQuo' method='POST'> 
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">OK</button><br />
+
+
+    {% endblock %}

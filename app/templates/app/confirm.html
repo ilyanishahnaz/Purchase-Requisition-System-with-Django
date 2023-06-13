@@ -1,0 +1,15 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class = "text-center">
+</br>
+    <i class="fa fa-check" style = "font-size: 36px;"></i>
+    <h3 style = "text-align: center;">Form submission successful</h3></br>
+
+<form class="margintop" action='menu' method='POST'> 
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">OK</button><br />
+
+
+    {% endblock %}
